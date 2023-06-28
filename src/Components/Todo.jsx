@@ -19,36 +19,34 @@ function Todo() {
     if (todo !== "") {
       // Check if the todo already exists in the array
       const isDuplicate = todos.some((item) => item.list === todo);
-
+  
       if (isDuplicate) {
         // Handle duplicate case, e.g., show an error message or perform other actions
         console.log("Duplicate todo detected!");
       } else {
-        // Add the todo to the array
-        setTodos([
-          ...todos,
-          {
-            list: todo,
-            id: Date.now(),
-            status: false,
-          },
-        ]);
+        if (editId) {
+          // Editing existing todo
+          const updatedTodos = todos.map((to) =>
+            to.id === editId ? { ...to, list: todo } : to
+          );
+          setTodos(updatedTodos);
+          setEditID(0);
+        } else {
+          // Add a new todo to the array
+          setTodos([
+            ...todos,
+            {
+              list: todo,
+              id: Date.now(),
+              status: false,
+            },
+          ]);
+        }
       }
-      setTodo("");
-      setEditID(0);
-    }
-    if (editId) {
-      const editTodo = todos.find((todo) => todo.id === editId);
-      const updateTodo = todos.map((to) =>
-        to.id === editTodo.id
-          ? (to = { id: to.id, list: todo })
-          : (to = { id: to.id, list: to.list })
-      );
-      setTodos(updateTodo);
-      setEditID(0);
       setTodo("");
     }
   };
+  
 
   const inputRef = useRef("null");
 
