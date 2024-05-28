@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Todo.css";
-import { useState, useRef, useEffect } from "react";
 import { BiEditAlt } from "react-icons/bi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoMdDoneAll } from "react-icons/io";
@@ -19,10 +18,11 @@ function Todo() {
     if (todo !== "") {
       // Check if the todo already exists in the array
       const isDuplicate = todos.some((item) => item.list === todo);
-  
+
       if (isDuplicate) {
         // Handle duplicate case, e.g., show an error message or perform other actions
         console.log("Duplicate todo detected!");
+        alert("Duplicate todo detected!");
       } else {
         if (editId) {
           // Editing existing todo
@@ -46,7 +46,6 @@ function Todo() {
       setTodo("");
     }
   };
-  
 
   const inputRef = useRef("null");
 
